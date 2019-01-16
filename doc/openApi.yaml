@@ -8,6 +8,80 @@ info:
   version: 1.0.1
 paths:
   /user:
+    delete:
+      summary: Delete a user in the service
+      parameters:
+      - name: userId
+        in: query
+        description: userId of the user to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: User well deleted.
+        '401':
+          description: User not authorized to create user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+      security:
+      - admin:
+        - write:user
+        - read:user
+    put:
+      summary: Update a user in the service
+      parameters:
+      - name: userId
+        in: query
+        description: userId of the user to modify
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                info:
+                  description: Everything you want
+                  type: object
+                permissions:
+                  description: Permissions for the user
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: The user updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          description: User not authorized to update user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+      security:
+      - admin:
+        - write:user
+        - read:user
     post:
       summary: Create a new user in the service
       requestBody:
@@ -16,22 +90,25 @@ paths:
             schema:
               type: object
               properties:
-                email:
-                  description: Email of the user
+                provider:
+                  description: 'Name of the provider(ex: github or manual)'
                   type: string
-                password:
-                  description: The hash of the password
-                  type: string
+                providerReq:
+                  description: Information needed to register the user by the provider
+                  type: object
+                info:
+                  description: Everything you want to add to your user
+                  type: object
                 permissions:
                   description: Permissions for the user
                   type: array
                   items:
                     type: string
               required:
-                - email
-                - password
+                - provider
+                - providerReq
       responses:
-        '200':
+        '201':
           description: JWT token of the user.
           content:
             application/json:
@@ -39,6 +116,12 @@ paths:
                 $ref: '#/components/schemas/token'
         '303':
           description: User already created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '400':
+          description: Information for the provider uncorrect
           content:
             application/json:
               schema:
@@ -82,7 +165,7 @@ components:
       properties:
         userId:
           type: string
-        data:
+        info:
           description: 'Everything you posted in the user + some data in function of the provider(Ex: email)'
           type: object
     token:
