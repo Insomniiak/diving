@@ -1,0 +1,113 @@
+openapi: '1.0.0'
+info:
+  title: AuthService
+  description: A service to manage Users
+  contact:
+    name: API Support
+    email: aymeric.beudaert@gmail.com
+  version: 1.0.1
+paths:
+  /user:
+    post:
+      summary: Create a new user in the service
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                email:
+                  description: Email of the user
+                  type: string
+                password:
+                  description: The hash of the password
+                  type: string
+                permissions:
+                  description: Permissions for the user
+                  type: array
+                  items:
+                    type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: JWT token of the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+        '303':
+          description: User already created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '401':
+          description: User not authorized to create user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+      security:
+      - admin:
+        - write:user
+        - read:user
+  /validateUser:
+    get:
+      description: Validate user
+      parameters:
+      - name: token
+        in: query
+        description: token to validate
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: return users infos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+      security:
+      - admin:
+        - write:user
+        - read:user
+
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        userId:
+          type: string
+        data:
+          description: 'Everything you posted in the user + some data in function of the provider(Ex: email)'
+          type: object
+    token:
+      type: object
+      properties:
+        token:
+          type: string
+    GeneralError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+  securitySchemes:
+    admin:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
