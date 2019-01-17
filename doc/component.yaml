@@ -1,0 +1,82 @@
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        id:
+          description: Id of the user
+          type: string
+        providers:
+          description: List of providers with their token
+          type: object
+          properties:
+            github:
+              $ref: '#/components/schemas/provider'
+        info:
+          description: 'Everything you posted in the user + some data in function of the provider(Ex: email)'
+          type: object
+        permissions:
+          description: Permissions for the user
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - providers
+    registerUser:
+      type: object
+      properties:
+        provider:
+          description: 'Name of the provider (Ex: github or manual)'
+          type: string
+        registrationInfo:
+          description: 'Depend on the provider type'
+          type: object
+        info:
+          description: 'Everything you posted in the user + some data in function of the provider(Ex: email)'
+          type: object
+        permissions:
+          description: Permissions for the user
+          type: array
+          items:
+            type: string
+      required:
+        - provider
+        - registrationInfo
+    provider:
+      type: object
+      properties:
+        userId:
+          type: string
+        token:
+          type: string
+    token:
+      type: object
+      properties:
+        token:
+          type: string
+    GeneralError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    GeneralSuccess:
+      type: object
+      properties:
+        success: true
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+  securitySchemes:
+    admin:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

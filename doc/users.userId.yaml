@@ -1,0 +1,98 @@
+path:
+  get:
+    tags:
+    - user/{userId}
+    summary: Get a user in the service
+    responses:
+      '200':
+        description: Get the user.
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/user'
+      '401':
+        description: User not authorized to get user
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+      '404':
+        description: User not found
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+    security:
+    - admin:
+      - write:user
+      - read:user
+
+  post:
+    tags:
+    - user/{userId}
+    summary: Not Allowed
+    responses:
+      '405':
+        description: Method not Allowed
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+
+  put:
+    tags:
+    - user/{userId}
+    summary: Update a user in the service
+    requestBody:
+      content:
+        'application/json':
+          schema:
+            type: object
+            $ref: 'component.yaml#/components/schemas/user'
+    responses:
+      '200':
+        description: The user updated.
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/user'
+      '401':
+        description: User not authorized to update user
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+      '404':
+        description: User not found
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+    security:
+    - admin:
+      - write:user
+      - read:user
+
+  delete:
+    tags:
+    - user/{userId}
+    summary: Delete a specifique user in the service
+    responses:
+      '200':
+        description: Users well deleted.
+      '401':
+        description: User not authorized to delete users
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+      '404':
+        description: User not found
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+    security:
+    - admin:
+      - write:user
+      - read:user
