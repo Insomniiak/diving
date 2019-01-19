@@ -32,6 +32,7 @@
 | :----: | :----: |
 | id | uuid |
 | userId | ForeignKey |
+| githubId | uuid |
 | access_token | string |
 | createdAt | date |
 | updatedAt | date |

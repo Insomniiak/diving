@@ -1,23 +1,12 @@
 require('dotenv').config();
 const Koa = require('koa');
+const morgan = require('koa-morgan');
 const logger = require('./logger');
 
+const port = process.env.PORT_NODE || 3000;
 const app = new Koa();
 
-// logger
-app.use(async (ctx, next) => {
-  await next();
-  const rt = ctx.response.get('X-Response-Time');
-  logger.info(`${ctx.method} ${ctx.url} - ${rt}`);
-});
-
-// x-response-time
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  ctx.set('X-Response-Time', `${ms}ms`);
-});
+app.use(morgan('dev'));
 
 // response
 app.use(async (ctx) => {
@@ -28,5 +17,5 @@ app.on('error', (err) => {
   logger.error(err);
 });
 
-app.listen(process.env.PORT_NODE);
-logger.info(`Server running on port ${process.env.PORT_NODE}`);
+app.listen(port);
+logger.info(`Server running on port ${port}`);
