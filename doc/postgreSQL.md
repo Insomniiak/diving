@@ -4,25 +4,25 @@
 
 | Name   | type   |
 | :----: | :----: |
-| id     | uuid |
-| providerList | ForeignKey |
-| permissions | array[strings] |
-| info   | jsonB |
-| createdAt | date |
-| updatedAt | date |
+| UserId | uuid |
+| ProviderList | ForeignKey(listId).in(ProvidersList) |
+| Permissions | array[strings] |
+| Info   | jsonB |
+| CreatedAt | date |
+| UpdatedAt | date |
 
 ### ProvidersList
 
 | Name | type |
 | :----: | :----: |
-| id | uuid |
-| userId | foreignKey |
-| github | foreignKey |
-| slack | foreignKey |
-| manual | foreignKey |
+| ListId | uuid |
+| UserId | foreignKey(userId).in(User) |
+| GithubId | foreignKey(githubId).in(GithubProvider) |
+| SlackId | foreignKey(slackId).in(SlackProvider) |
+| ManualId | foreignKey(manualId).in(ManualProvider) |
 | ... | ... |
-| createdAt | date |
-| updatedAt | date |
+| CreatedAt | date |
+| UpdatedAt | date |
 
 ## Providers
 
@@ -30,21 +30,21 @@
 
 | Name | type |
 | :----: | :----: |
-| id | uuid |
-| userId | ForeignKey |
-| githubId | uuid |
-| access_token | string |
-| createdAt | date |
-| updatedAt | date |
+| GithubId | uuid |
+| UserId | ForeignKey(userId).in(user) |
+| GithubUserId | uuid |
+| AccessToken | string |
+| CreatedAt | date |
+| UpdatedAt | date |
 
 ### Manual
 
 | Name | type |
 | :----: | :----: |
-| id | uuid |
-| userId | ForeignKey |
-| userEmail | string |
-| password | string |
-| access_token | string |
-| createdAt | date |
-| updatedAt | date |
+| ManualId | uuid |
+| UserId | ForeignKey(userId).in(user) |
+| UserEmail | string |
+| Password | string |
+| AccessToken | string |
+| CreatedAt | date |
+| UpdatedAt | date |

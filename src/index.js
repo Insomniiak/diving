@@ -3,7 +3,7 @@ const Koa = require('koa');
 const morgan = require('koa-morgan');
 const logger = require('./logger');
 
-const port = process.env.PORT_NODE || 3000;
+const port = process.env.NODE_PORT || 3000;
 const app = new Koa();
 
 app.use(morgan('dev'));

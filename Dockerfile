@@ -4,7 +4,9 @@ WORKDIR /usr/src
 
 COPY package*.json ./
 
+RUN npm install -g knex
 RUN npm install
+
 COPY . .
 
 EXPOSE 3000
