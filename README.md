@@ -1,5 +1,11 @@
 # AuthService
 
+## Serve Doc
+
+```
+redoc-cli serve doc/openApi.yaml
+```
+
 ## ENV
 
 ```bash

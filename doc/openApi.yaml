@@ -1,0 +1,46 @@
+openapi: '1.0.0'
+info:
+  title: AuthService
+  description: A service to manage Users
+  contact:
+    name: API Support
+    email: aymeric.beudaert@gmail.com
+  version: 1.0.1
+tags:
+  - name: user
+  - name: user/{userId}
+
+paths:
+  /users/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        description: userId of the user to modify
+        required: true
+        schema:
+          type: string
+    get:
+      $ref: 'users.userId.yaml#/path/get'
+    post:
+      $ref: 'users.userId.yaml#/path/post'
+    put:
+      $ref: 'users.userId.yaml#/path/put'
+    delete:
+      $ref: 'users.userId.yaml#/path/delete'
+  /users:
+    get:
+      $ref: 'users.yaml#/path/get'
+    post:
+      $ref: 'users.yaml#/path/post'
+    put:
+      $ref: 'users.yaml#/path/put'
+    delete:
+      $ref: 'users.yaml#/path/delete'
+
+
+components:
+  securitySchemes:
+    admin:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,122 @@
+path:
+  get:
+    tags:
+      - user
+    summary: Get all users in the service
+    responses:
+      '200':
+        description: Array of users
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: 'component.yaml#/components/schemas/user'
+      '401':
+        description: User not authorized to get users
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+    security:
+    - admin:
+      - write:user
+      - read:user
+
+  delete:
+    tags:
+      - user
+    summary: Delete all users in the service
+    responses:
+      '200':
+        description: Users well deleted.
+      '401':
+        description: User not authorized to delete users
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+      '404':
+        description: User not found
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+    security:
+    - admin:
+      - write:user
+      - read:user
+
+  put:
+    tags:
+      - user
+    summary: Update a batch of users in the service
+    requestBody:
+      content:
+        'application/json':
+          schema:
+            type: array
+            items:
+              $ref: 'component.yaml#/components/schemas/user'
+    responses:
+      '200':
+        description: Users updated.
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralSuccess'
+      '401':
+        description: User not authorized to update user
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+      '404':
+        description: One User or more not found
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+    security:
+    - admin:
+      - write:user
+      - read:user
+
+  post:
+    tags:
+      - user
+    summary: Create a new user in the service
+    requestBody:
+      content:
+        'application/json':
+          schema:
+            $ref: 'component.yaml#/components/schemas/registerUser'
+    responses:
+      '201':
+        description: JWT token of the new user.
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/token'
+      '303':
+        description: User already created
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+      '400':
+        description: Information for the provider uncorrect
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+      '401':
+        description: User not authorized to create user
+        content:
+          application/json:
+            schema:
+              $ref: 'component.yaml#/components/schemas/GeneralError'
+    security:
+    - admin:
+      - write:user
+      - read:user

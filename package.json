@@ -6,6 +6,9 @@
     "scripts": {
         "start": "node src/index.js",
         "lint": "eslint --fix --ext .js .",
+        "migrate:dev": "./scripts/migrateDB.sh development",
+        "seed:dev": "./scripts/seedDB.sh development",
+        "rollback:dev": "./scripts/rollbackDB.sh development",
         "test": "jest"
     },
     "author": "",
@@ -13,8 +16,11 @@
     "dependencies": {
         "dotenv": "^6.2.0",
         "hot-shots": "^6.1.1",
+        "knex": "^0.16.3",
         "koa": "^2.6.2",
+        "koa-morgan": "^1.0.1",
         "koa-router": "^7.4.0",
+        "pg": "^7.8.0",
         "winston": "^3.1.0"
     },
     "devDependencies": {
