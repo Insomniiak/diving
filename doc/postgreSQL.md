@@ -5,7 +5,7 @@
 | Name   | type   |
 | :----: | :----: |
 | UserId | uuid |
-| ProviderList | ForeignKey(listId).in(ProvidersList) |
+| ProvidersList | ForeignKey(listId).in(ProvidersList) |
 | Permissions | array[strings] |
 | Info   | jsonB |
 | CreatedAt | date |

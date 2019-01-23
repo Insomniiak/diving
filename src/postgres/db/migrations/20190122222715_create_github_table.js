@@ -3,8 +3,8 @@ exports.up = (knex) => {
     table.increments('GithubId');
     table.foreign('UserId').references('UserId').on('User');
     table.specificType('Permissions', 'text[]');
-    table.integer('GithubUserId');
-    table.string('AccessToken');
+    table.integer('GithubUserId').notNullable();
+    table.string('AccessToken').notNullable();
     table.timestamps();
   });
 };
