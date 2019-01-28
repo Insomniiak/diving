@@ -1,6 +1,6 @@
 const logger = require('../index');
 
 test('Logger Test', () => {
-  logger.p_jsonFormatter({ test: 'testing' });
+  logger.info('tesst');
   expect(true).toBe(true);
 });

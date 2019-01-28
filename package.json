@@ -9,7 +9,8 @@
         "migrate:dev": "./scripts/migrateDB.sh development",
         "seed:dev": "./scripts/seedDB.sh development",
         "rollback:dev": "./scripts/rollbackDB.sh development",
-        "test": "jest"
+        "deploy:doc": "redoc-cli serve doc/openApi.yaml --watch",
+        "test": "NODE_ENV=test && jest"
     },
     "author": "",
     "license": "ISC",
@@ -30,7 +31,8 @@
         "eslint-plugin-jest": "^22.1.3",
         "husky": "^1.3.1",
         "jest": "^23.6.0",
-        "lint-staged": "^8.1.0"
+        "lint-staged": "^8.1.0",
+        "supertest": "^3.4.2"
     },
     "eslintIgnore": [
         "!.eslintrc.js",

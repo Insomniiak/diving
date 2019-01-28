@@ -22,6 +22,6 @@ const logger = winston.createLogger({
   ],
   format: winston.format(jsonFormatter)(),
 });
-logger.p_jsonFormatter = jsonFormatter;
 
+logger.p_jsonFormatter = jsonFormatter;
 module.exports = logger;
