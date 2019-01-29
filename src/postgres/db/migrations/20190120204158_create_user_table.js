@@ -30,7 +30,7 @@ exports.up = knex => knex.schema
     table.increments('ManualId');
     table.integer('UserId_fk');
     table.foreign('UserId_fk').references('UserId').on('User');
-    table.string('UserEmail').notNullable();
+    table.string('Username').notNullable();
     table.string('Password').notNullable();
     table.string('AccessToken').notNullable();
     table.timestamps(true, true);
